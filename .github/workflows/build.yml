@@ -51,7 +51,7 @@ jobs:
     steps:
     - name: Test with pytest
       run: |
-        pytest --alluredir=allure-results
+        pipenv pytest ${{ inputs.test_file }} --alluredir=allure-results
   
   Report:
     needs: Test
