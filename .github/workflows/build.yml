@@ -9,13 +9,27 @@ on:
       test_file:
         description: "The name of the test file"
         required: false
-
-
+        
 jobs:
-  Build:
-
+   
+  Tag:
     runs-on: ubuntu-latest
+    steps:
+    - name: Get pull request information
+      id: pr
+      uses: actions/github@v3
+      with:
+        repository: ${{ github.repository }}
+        event_type: pull_request
 
+    - name: Extract tag from pull request title
+      run: |
+        title=$(echo "${{ steps.pr.outputs.data.title }}")
+        tag=$(echo $title | grep -o "#[a-zA-Z0-9]*")
+        echo "Tag: $tag"
+        
+  Build:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.10
