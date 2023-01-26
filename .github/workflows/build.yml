@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Get pull request information
       id: pr
-      uses: actions/github@v3
+      uses: actions/github@v2
       with:
         repository: ${{ github.repository }}
         event_type: pull_request
