@@ -5,6 +5,10 @@ name: 🚀 Continuous Integration
 
 on:
   workflow_dispatch:
+    inputs:
+      test_file:
+        description: "The name of the test file"
+        required: true
 
 
 jobs:
