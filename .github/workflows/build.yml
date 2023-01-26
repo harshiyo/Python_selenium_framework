@@ -52,7 +52,11 @@ jobs:
     steps:
     - name: Test with pytest
       run: |
-        pipenv pytest ${{ inputs.test_file }} --alluredir=allure-results
+        if [ -z "${{ inputs.test_file }}" ]; then
+          pipenv pytest --alluredir=allure-results
+        else 
+          pipenv pytest --alluredir=allure-results
+        fi
   
   Report:
     needs: Test
