@@ -14,23 +14,6 @@ on:
         required: false
         
 jobs:
-   
-  Tag:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Get pull request information
-      id: pr
-      uses: actions/github@v3
-      with:
-        repository: ${{ github.repository }}
-        event_type: pull_request
-
-    - name: Extract tag from pull request title
-      run: |
-        title=$(echo "${{ steps.pr.outputs.data.title }}")
-        tag=$(echo $title | grep -o "#[a-zA-Z0-9]*")
-        echo "Tag: $tag"
-        
   Build:
     runs-on: ubuntu-latest
     steps:
@@ -67,12 +50,13 @@ jobs:
     needs: Linting
     runs-on: ubuntu-latest
     steps:
-    - name: Test with pytest
+    - name: Test with pytest - ( Marker ${{ inputs.marker }} )
       run: |
-        if [ -z "${{ inputs.test_file }}" ]; then
-          pipenv pytest --alluredir=allure-results
+        if [ -z "${{ inputs.marker }}" ]; then
+          pipenv run pytest -m ${{ inputs.marker }}
+          echo "Running tests with marker: ${{ inputs.marker }}"
         else 
-          pipenv pytest --alluredir=allure-results
+          pipenv run pytest --alluredir=allure-results
         fi
   
   Report:
