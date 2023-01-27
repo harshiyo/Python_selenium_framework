@@ -42,7 +42,7 @@ jobs:
       - name: Test 
         run: |
           if [[ -n "${{ inputs.marker }}" ]]; then
-            pipenv run pytest -m ${{ inputs.marker }}
+            pipenv run pytest -m ${{ inputs.marker }}  --alluredir=allure-results
             echo "Running tests with marker: ${{ inputs.marker }}"
           else 
             pipenv run pytest --alluredir=allure-results
