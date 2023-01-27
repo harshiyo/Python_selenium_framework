@@ -37,10 +37,6 @@ jobs:
       run: |
         pipenv install --deploy --dev
         
-  Test:
-    needs: Build
-    runs-on: ubuntu-latest
-    steps:
     - name: Test with pytest - ( Marker ${{ inputs.marker }} )
       run: |
         if [ -z "${{ inputs.marker }}" ]; then
@@ -49,9 +45,9 @@ jobs:
         else 
           pipenv run pytest --alluredir=allure-results
         fi
-  
+        
   Report:
-    needs: Test
+    needs: Build
     runs-on: ubuntu-latest
     steps:
     - name: Get Allure history
