@@ -9,7 +9,7 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      test_file:
+      marker:
         description: "The name of the test file"
         required: false
         
@@ -37,9 +37,9 @@ jobs:
       run: |
         pipenv install --deploy --dev
         
-    - name: Test with pytest - ( Marker ${{ inputs.marker }} )
+    - name: Test with pytest 
       run: |
-        if [ -z "${{ inputs.marker }}" ]; then
+        if [[ -n "${{ inputs.marker }}" ]]; then
           pipenv run pytest -m ${{ inputs.marker }}
           echo "Running tests with marker: ${{ inputs.marker }}"
         else 
